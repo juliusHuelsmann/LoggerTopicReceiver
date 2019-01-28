@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib
 import subprocess
 import sys
+import copy
 from scipy import interpolate
 
 from backend import *
@@ -74,7 +75,8 @@ def visualize(plotsInCol=3):
         #plt.subplots_adjust(0.04, 0.06, 0.97, 0.94)
         subplots = [[plt.subplot(rows, cols, r*cols + c+1) for c in range(cols)] for r in range(rows)]
 
-    for plti, i in enumerate(bk):
+    ke = copy.deepcopy(list(bk.keys())) #< everything that used to be there will be there.
+    for plti, i in enumerate(ke[:amountPlots]):
         assert(type(bk) is dict)
        
         #sp = plt.subplot(rows, cols, plti+1)
@@ -95,17 +97,21 @@ def visualize(plotsInCol=3):
                     yy = lkz[:,1:] if lkz.shape[1] > 1 else lkz[:,0:1]
                     yy = yy.T
 
-                    for en,y in enumerate(yy):
-                        if tkz == "points":
-                            sp.plot(x, y, 
-                                    label= name + ("[" + str(en) + "]" if yy.shape[0] > 1 else ""))
-                        elif tkz == "histogram":
-                            #sp.hist(x  if tkz != "histogram" else y, y if tkz != "histogram" else x, 
-                            #        label= name + ("[" + str(en) + "]" if yy.shape[0] > 1 else ""))
-                            sp.hist(y, label=name + ("[" + str(en) + "]" if yy.shape[0] > 1 else ""))
-                        else:
-                            sp.plot(x, y,  
-                                    label= name + ("[" + str(en) + "]" if yy.shape[0] > 1 else ""))
+                    sheep = yy.shape[0]#< everything that used to be there will be there.
+                    titles=[]
+                    if tkz == "histogram":
+                        for en in range(lkz.T.shape[0]):
+                            titles += [ "[" + str(en) + "]"]
+                        sp.hist(lkz, label=titles)
+                    else:
+                        for en in range(sheep):
+                            y = yy[en]
+                            if tkz == "points":
+                                sp.plot(x, y, 
+                                        label= name + ("[" + str(en) + "]" if yy.shape[0] > 1 else ""))
+                            else:
+                                sp.plot(x, y,  
+                                        label= name + ("[" + str(en) + "]" if yy.shape[0] > 1 else ""))
 
 
                 
