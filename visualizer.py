@@ -116,11 +116,13 @@ def visualize(plotsInCol=3):
 
                 
                 elif tkz == "interval" :
-                    assert(lkz.shape[1] == 2 or lkz.shape[1] == 3)
-                    x = np.hstack((lkz[:,0:2], np.ones(lkz.shape[0])[:,np.newaxis] * np.nan)).flatten()
-                    y = np.ones(x.shape[0])  * (lkz[0,2] if lkz.shape[1] == 3 else tryParse(j))
+                    if (lkz.shape[1] == 2 or lkz.shape[1] == 3):
+                    
+                        assert(lkz.shape[1] == 2 or lkz.shape[1] == 3)
+                        x = np.hstack((lkz[:,0:2], np.ones(lkz.shape[0])[:,np.newaxis] * np.nan)).flatten()
+                        y = np.ones(x.shape[0])  * (lkz[0,2] if lkz.shape[1] == 3 else tryParse(j))
 
-                    sp.plot(x, y, label= name)
+                        sp.plot(x, y, label= name)
                 
         sp.legend()
         sp.set_title(name)

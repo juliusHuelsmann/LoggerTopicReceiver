@@ -53,7 +53,10 @@ class Backend(threading.Thread):
             pi = pos + i * sizeTuple
 
             au =  string[pi + 0 * sizeType : pi + (0+1) * sizeType]
-            unpack(str(dataType), au)
+            try:
+                unpack(str(dataType), au)
+            except:
+                return
 
             u = np.array([unpack(str(dataType), string[pi + j * sizeType: 
                     pi + (j+1) * sizeType])[0] for j in range(amountParams)])[np.newaxis,:]
