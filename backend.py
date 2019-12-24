@@ -28,8 +28,12 @@ class Backend(threading.Thread):
         # name (identifier of topic)
         sizeString  = int(string[1])
         name        = string[2:sizeString+2].decode("utf-8")
+        print(sizeString)
+        print(name)
+
         sizeIndex   = int(string[sizeString+2])
         index       = string[sizeString+3:sizeString+sizeIndex+3].decode("utf-8") if sizeIndex else ""
+
         sizePlot    = int(string[sizeString+sizeIndex+3])
         plotStyle   = string[sizeString+sizeIndex+4:sizeString+sizeIndex+sizePlot+4].decode("utf-8")
 
@@ -37,8 +41,9 @@ class Backend(threading.Thread):
         amountParams= int(string[pos])
         sizeType    = int(string[pos+1])
         dataType    = string[pos+2:pos+3].decode("utf-8")
-        bufferSize  = int(string[pos+3])
-        pos = pos+4
+        bufferSize  = unpack('Q', string[pos+3:pos+3+8])[0]
+
+        pos = pos+3+8
   
         sizeTuple   = sizeType * amountParams
         amountTuples= int((len(string) - pos) / sizeTuple);

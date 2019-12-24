@@ -42,10 +42,12 @@ matplotlib.rcParams['xtick.labelbottom'] = True
 #matplotlib.rcParams['xtick.labeltop'] = True
 matplotlib.rcParams['text.latex.preview'] = True
 
-matplotlib.rcParams['toolbar'] = 'None'
+#matplotlib.rcParams['toolbar'] = 'None'
+
+plt.rcParams.update({'font.size': 6})
 
 
-szpp = 3
+szpp = 2 #3
 fig = plt.figure(figsize=(szpp, szpp), facecolor=[0,0,0,1])
 #print(matplotlib.rcParams.keys())
 
@@ -135,7 +137,7 @@ def walk(multithreaded=True):
     while True:
         if not multithreaded: backend.receiveVal()
         visualize()
-        plt.pause(.1)
+        plt.pause(1)
 
 
 walk()
